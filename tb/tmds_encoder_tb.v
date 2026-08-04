@@ -1,5 +1,3 @@
-`include "tmds_vectors.v"
-
 `timescale 1ns/1ps
 
 module tmds_encoder_tb;
