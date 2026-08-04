@@ -2,7 +2,7 @@
 
 A real-time Pong game implemented in Verilog and deployed on a Spartan-7 FPGA board. The design generates a 640×480 video signal, encodes RGB data into TMDS, serializes the HDMI channels with Xilinx primitives, and runs the game logic synchronously with the video frame rate.
 
-![Pong running on FPGA](docs/pong.png)
+![Pong datapath block diagram](docs/pong.png)
 
 ## Features
 
@@ -40,7 +40,7 @@ fpga-hdmi-pong/
 │   ├── display/   # Seven-segment score display
 │   └── common/    # Synchronizer and shared utility modules
 ├── constraints/   # FPGA pin and timing constraints
-└── docs/          # Block diagrams and hardware screenshots
+└── docs/          # Block diagrams and design figures
 ```
 
 ## Top module
@@ -75,10 +75,10 @@ The complete design was synthesized, implemented, programmed, and tested on phys
 
 ## Academic context and attribution
 
-This project was developed individually as part of the **Digital Systems Laboratory** course at the **University of Thessaly** during the **Winter Semester 2025–2026**. It was submitted under the administrative designation **Team 23**, which consisted of one student.
+This project was developed individually as part of the **Digital Systems Laboratory** course at the **University of Thessaly** during the **Winter Semester 2025–2026**.
 
 After completing the core laboratory requirements, I extended the design with additional functionality, including one- and two-player game modes, a start menu, Game Over graphics, score tracking, configurable movement, collision handling, and seven-segment display integration. The complete system was implemented in Verilog and verified on a Spartan-7 FPGA with real-time HDMI output.
 
-The laboratory specification and some verification infrastructure were provided by the course. The RTL included in this repository is the submitted implementation; AMD/Xilinx primitives are instantiated for clocking, serialization, and differential output.
+The laboratory specification and some verification infrastructure were provided by the course. The RTL included in this repository is the submitted implementation. AMD/Xilinx primitives are instantiated for clocking, serialization, and differential output.
 
-No open-source license is currently granted. The code is published for portfolio and educational review purposes.
+No open-source license is currently provided. The code is shared for portfolio and educational review purposes.
