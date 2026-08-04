@@ -85,7 +85,35 @@ The exact pin mapping is documented in `constraints/PONG_multiplayer.xdc`.
 
 ## Verification
 
-The complete design was synthesized, implemented, programmed, and tested on physical FPGA hardware with real-time HDMI output. The repository intentionally excludes Vivado-generated build directories and bitstreams.
+The design was verified through both behavioral simulation and real hardware execution.
+
+### Behavioral simulation
+
+Self-checking testbenches were executed using **Vivado XSIM 2021.2**:
+
+* **TMDS encoder:** 999/999 reference data vectors passed
+* **TMDS control encoding:** 4/4 control symbols passed
+* **Video timing generator:** two complete 640×480 frames were checked
+* **Pixel-clock cycles verified:** 840,000
+* **Detected simulation errors:** 0
+
+### Hardware validation
+
+The complete Pong system was synthesized, implemented, programmed, and tested on a **Spartan-7 FPGA board**.
+
+The design operated correctly in real time, including:
+
+* HDMI video output
+* Pong graphics and animation
+* one-player and two-player modes
+* paddle controls
+* ball movement and collision handling
+* score tracking
+* start menu and Game Over display
+* seven-segment display output
+
+The game was successfully displayed and played on a physical HDMI monitor.
+
 
 ## Academic context and attribution
 
