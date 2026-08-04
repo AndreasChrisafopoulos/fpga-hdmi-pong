@@ -2,7 +2,7 @@
 
 A real-time Pong game implemented in Verilog and deployed on a Spartan-7 FPGA board. The design generates a 640×480 video signal, encodes RGB data into TMDS, serializes the HDMI channels with Xilinx primitives, and runs the game logic synchronously with the video frame rate.
 
-![Pong datapath block diagram](docs/pong.png)
+
 
 ## Features
 
@@ -18,6 +18,16 @@ A real-time Pong game implemented in Verilog and deployed on a Spartan-7 FPGA bo
 - Hardware implementation and verification on an FPGA board
 
 ## Design overview
+
+## Architecture diagrams
+
+### Game engine
+
+![Game engine block diagram](docs/game_engine_block_diagram.png)
+
+### Mode control FSM
+
+![Mode control FSM](docs/mode_control_fsm.png)
 
 The system is divided into the following blocks:
 
