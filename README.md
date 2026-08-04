@@ -19,7 +19,20 @@ A real-time Pong game implemented in Verilog and deployed on a Spartan-7 FPGA bo
 
 ## Design overview
 
+The design combines a frame-synchronous game engine with a pixel-rate video and HDMI output pipeline. Game state is updated once per video frame, while the rendering logic generates RGB values combinationally for each active pixel.
+
+The system is organized into the following subsystems:
+
+* **Top-level integration**: clock generation, reset synchronization, game engine, score display, and HDMI output
+* **Video timing**: horizontal and vertical timing state machines, synchronization signals, and pixel-coordinate generation
+* **Game engine**: mode selection, paddle control, ball movement, collision detection, scoring, and Game Over behavior
+* **Rendering**: combinational RGB generation from the current game state and pixel coordinates
+* **TMDS pipeline**: transition minimization, disparity-aware 10-bit encoding, and 10:1 serialization
+* **Display subsystem**: multiplexed four-digit seven-segment score output
+
 ## Architecture diagrams
+
+The following diagrams focus on the internal game engine and its mode-control state machine.
 
 ### Game engine
 
@@ -28,15 +41,6 @@ A real-time Pong game implemented in Verilog and deployed on a Spartan-7 FPGA bo
 ### Mode control FSM
 
 ![Mode control FSM](docs/mode_control_fsm.png)
-
-The system is divided into the following blocks:
-
-- **Top-level integration**: clock generation, reset synchronization, game engine, score display, and HDMI output
-- **Video timing**: horizontal and vertical timing state machines and pixel-coordinate generation
-- **Game engine**: menu state, paddle control, ball movement, collision detection, scoring, and Game Over behavior
-- **Rendering**: combinational generation of RGB values from the current pixel coordinates
-- **TMDS pipeline**: transition minimization, disparity-aware 10-bit encoding, and 10:1 serialization
-- **Display subsystem**: multiplexed four-digit seven-segment score output
 
 ## Repository structure
 
