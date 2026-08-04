@@ -1,0 +1,28 @@
+# Vivado generated files and directories
+.Xil/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.srcs/sources_1/bd/
+*.gen/
+*.jou
+*.log
+*.str
+*.pb
+*.wdb
+*.vcd
+*.bit
+*.bin
+*.ltx
+*.dcp
+*.xsa
+*.html
+*.xml
+*.zip
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
