@@ -53,6 +53,7 @@ fpga-hdmi-pong/
 │   ├── tmds/      # TMDS encoding and serialization
 │   ├── display/   # Seven-segment score display
 │   └── common/    # Synchronizer and shared utility modules
+├── tb/            # Self-checking behavioral testbenches
 ├── constraints/   # FPGA pin and timing constraints
 └── docs/          # Block diagrams and design figures
 ```
