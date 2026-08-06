@@ -64,7 +64,7 @@ The design expects a 100 MHz board clock. The MMCM produces the pixel and serial
 
 ## Vivado project setup
 
-1. Create a new RTL project in AMD/Xilinx Vivado for the Spartan-7 device fitted to the target board.
+1. Create a new RTL project in AMD/Xilinx Vivado for the `XC7S50-CSGA324-1` device.
 2. Add all Verilog files under `rtl/` as design sources.
 3. Add `constraints/PONG_multiplayer.xdc` as a constraints file.
 4. Set `TOP_hdmi_pong_multiplayer` as the synthesis top module.
@@ -88,7 +88,7 @@ The exact pin mapping is documented in `constraints/PONG_multiplayer.xdc`.
 
 - Verilog HDL
 - AMD/Xilinx Vivado 2021.2
-- Spartan-7 FPGA development board
+- Xilinx Spartan-7 FPGA, device `XC7S50-CSGA324-1`
 - HDMI-compatible display
 
 ## Verification
