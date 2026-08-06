@@ -2,8 +2,6 @@
 
 A real-time Pong game implemented in Verilog and deployed on a Spartan-7 FPGA board. The design generates a 640×480 video signal, encodes RGB data into TMDS, serializes the HDMI channels with Xilinx primitives, and runs the game logic synchronously with the video frame rate.
 
-
-
 ## Features
 
 - 640×480 video output at approximately 60 Hz
@@ -23,12 +21,12 @@ The design combines a frame-synchronous game engine with a pixel-rate video and 
 
 The system is organized into the following subsystems:
 
-* **Top-level integration**: clock generation, reset synchronization, game engine, score display, and HDMI output
-* **Video timing**: horizontal and vertical timing state machines, synchronization signals, and pixel-coordinate generation
-* **Game engine**: mode selection, paddle control, ball movement, collision detection, scoring, and Game Over behavior
-* **Rendering**: combinational RGB generation from the current game state and pixel coordinates
-* **TMDS pipeline**: transition minimization, disparity-aware 10-bit encoding, and 10:1 serialization
-* **Display subsystem**: multiplexed four-digit seven-segment score output
+- **Top-level integration**: clock generation, reset synchronization, game engine, score display, and HDMI output
+- **Video timing**: horizontal and vertical timing state machines, synchronization signals, and pixel-coordinate generation
+- **Game engine**: mode selection, paddle control, ball movement, collision detection, scoring, and Game Over behavior
+- **Rendering**: combinational RGB generation from the current game state and pixel coordinates
+- **TMDS pipeline**: transition minimization, disparity-aware 10-bit encoding, and 10:1 serialization
+- **Display subsystem**: multiplexed four-digit seven-segment score output
 
 ## Architecture diagrams
 
@@ -60,12 +58,21 @@ fpga-hdmi-pong/
 
 ## Top module
 
-Use `TOP_hdmi_pong_multiplayer` as the synthesis top module and add:
-
-- all Verilog files under `rtl/`
-- `constraints/PONG_multiplayer.xdc`
+Use `TOP_hdmi_pong_multiplayer` as the synthesis top module.
 
 The design expects a 100 MHz board clock. The MMCM produces the pixel and serialization clocks required by the HDMI pipeline.
+
+## Vivado project setup
+
+1. Create a new RTL project in AMD/Xilinx Vivado for the Spartan-7 device fitted to the target board.
+2. Add all Verilog files under `rtl/` as design sources.
+3. Add `constraints/PONG_multiplayer.xdc` as a constraints file.
+4. Set `TOP_hdmi_pong_multiplayer` as the synthesis top module.
+5. Run synthesis and implementation.
+6. Generate the bitstream and program the FPGA board.
+
+The supplied constraints file contains the clock, HDMI, button, switch, LED, and seven-segment display pin assignments used by the verified hardware implementation.
+
 
 ## Controls
 
@@ -80,7 +87,7 @@ The exact pin mapping is documented in `constraints/PONG_multiplayer.xdc`.
 ## Tools and hardware
 
 - Verilog HDL
-- AMD/Xilinx Vivado
+- AMD/Xilinx Vivado 2021.2
 - Spartan-7 FPGA development board
 - HDMI-compatible display
 
@@ -92,11 +99,13 @@ The design was verified through both behavioral simulation and real hardware exe
 
 Self-checking testbenches were executed using **Vivado XSIM 2021.2**:
 
-* **TMDS encoder:** 999/999 reference data vectors passed
-* **TMDS control encoding:** 4/4 control symbols passed
-* **Video timing generator:** two complete 640×480 frames were checked
-* **Pixel-clock cycles verified:** 840,000
-* **Detected simulation errors:** 0
+- **TMDS encoder:** 999/999 reference data vectors passed
+- **TMDS control encoding:** 4/4 control symbols passed
+- **Video timing generator:** two complete 640×480 frames were checked
+- **Pixel-clock cycles verified:** 840,000
+- **Detected simulation errors:** 0
+
+Detailed simulation setup instructions and expected PASS messages are provided in [`tb/README.md`](tb/README.md).
 
 ### Hardware validation
 
@@ -104,24 +113,23 @@ The complete Pong system was synthesized, implemented, programmed, and tested on
 
 The design operated correctly in real time, including:
 
-* HDMI video output
-* Pong graphics and animation
-* one-player and two-player modes
-* paddle controls
-* ball movement and collision handling
-* score tracking
-* start menu and Game Over display
-* seven-segment display output
+- HDMI video output
+- Pong graphics and animation
+- one-player and two-player modes
+- paddle controls
+- ball movement and collision handling
+- score tracking
+- start menu and Game Over display
+- seven-segment display output
 
 The game was successfully displayed and played on a physical HDMI monitor.
-
 
 ## Academic context and attribution
 
 This project was developed individually as part of the **Digital Systems Laboratory** course at the **University of Thessaly** during the **Winter Semester 2025–2026**.
 
-After completing the core laboratory requirements, I extended the design with additional functionality, including one- and two-player game modes, a start menu, Game Over graphics, score tracking, configurable movement, collision handling, and seven-segment display integration. The complete system was implemented in Verilog and verified on a Spartan-7 FPGA with real-time HDMI output.
+After completing the core laboratory requirements, I extended the design with additional functionality, including one-player and two-player game modes, a start menu, Game Over graphics, score tracking, configurable movement, collision handling, and seven-segment display integration. The complete system was implemented in Verilog and verified on a Spartan-7 FPGA with real-time HDMI output.
 
-The laboratory specification and some verification infrastructure were provided by the course. The RTL included in this repository is the submitted implementation. AMD/Xilinx primitives are instantiated for clocking, serialization, and differential output.
+The laboratory specification and part of the verification infrastructure were provided by the course. The RTL implementation, system integration, and gameplay extensions are my submitted work. The repository was later organized for portfolio and educational review. AMD/Xilinx primitives are instantiated for clocking, serialization, and differential output.
 
 No open-source license is currently provided. The code is shared for portfolio and educational review purposes.
