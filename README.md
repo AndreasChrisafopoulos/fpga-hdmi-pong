@@ -1,6 +1,6 @@
 # FPGA HDMI Pong
 
-A real-time Pong game implemented in Verilog and deployed on a Spartan-7 FPGA board. The design generates a 640×480 video signal, encodes RGB data into TMDS, serializes the HDMI channels with Xilinx primitives, and runs the game logic synchronously with the video frame rate.
+A real-time Pong game implemented in Verilog and deployed on a Boolean Board with a Xilinx Spartan-7 XC7S50-CSGA324-1 FPGA. The design generates a 640×480 video signal, encodes RGB data into TMDS, serializes the HDMI channels with Xilinx primitives, and runs the game logic synchronously with the video frame rate.
 
 ## Features
 
@@ -13,7 +13,7 @@ A real-time Pong game implemented in Verilog and deployed on a Spartan-7 FPGA bo
 - Collision detection and scoring
 - Configurable ball and paddle speeds
 - Four-digit seven-segment score display
-- Hardware implementation and verification on an FPGA board
+- Hardware implementation and verification on a Spartan-7 FPGA
 
 ## Design overview
 
@@ -60,13 +60,13 @@ fpga-hdmi-pong/
 
 Use `TOP_hdmi_pong_multiplayer` as the synthesis top module.
 
-The design expects a 100 MHz board clock. The MMCM produces the pixel and serialization clocks required by the HDMI pipeline.
+The design expects a 100 MHz board clock. Dedicated MMCMs generate the derived clocks required by the HDMI and seven-segment display subsystems.
 
 ## Clocking and CDC
 
-The design uses three clock rates:
+The design uses a 100 MHz board clock and three derived clock rates:
 
-- 100 MHz board clock for the seven-segment display subsystem
+- 5 MHz display-multiplexing clock for the seven-segment display subsystem
 - approximately 25.18 MHz pixel clock for video timing, rendering, game-state updates, and TMDS encoding
 - approximately 125.89 MHz serialization clock for the TMDS serializers
 
@@ -83,10 +83,9 @@ The current implementation does not include dedicated synchronizers or debouncin
 3. Add `constraints/PONG_multiplayer.xdc` as a constraints file.
 4. Set `TOP_hdmi_pong_multiplayer` as the synthesis top module.
 5. Run synthesis and implementation.
-6. Generate the bitstream and program the FPGA board.
+6. Generate the bitstream and program the Boolean Board.
 
 The supplied constraints file contains the clock, HDMI, button, switch, LED, and seven-segment display pin assignments used by the verified hardware implementation.
-
 
 ## Controls
 
@@ -102,7 +101,8 @@ The exact pin mapping is documented in `constraints/PONG_multiplayer.xdc`.
 
 - Verilog HDL
 - AMD/Xilinx Vivado 2021.2
-- Xilinx Spartan-7 FPGA, device `XC7S50-CSGA324-1`
+- Boolean Board
+- Xilinx Spartan-7 `XC7S50-CSGA324-1` FPGA
 - HDMI-compatible display
 
 ## Implementation results
@@ -118,17 +118,16 @@ The final design was synthesized, placed, and routed in **Vivado 2021.2** for th
 | Slices | 169 | 8,150 | 2.07% |
 | Block RAM Tiles | 0 | 75 | 0.00% |
 | DSPs | 0 | 120 | 0.00% |
-| OSERDES | 6 | 210 | 2.86% |
-| MMCM | 2 | 5 | 40.00% |
+| MMCMs | 2 | 5 | 40.00% |
 
-The HDMI serialization path uses six OSERDES resources, corresponding to master/slave serializer pairs for the three TMDS data channels.
+The HDMI serialization path uses six `OSERDESE2` primitives, corresponding to master and slave serializer pairs for the three TMDS data channels. Four differential output buffers are used for the three TMDS data channels and the HDMI clock.
 
 ### Clock and timing summary
 
 | Clock | Frequency | Purpose |
 |---|---:|---|
 | Board clock | 100.000 MHz | Primary FPGA input clock |
-| Display clock | 5.000 MHz | Seven-segment display subsystem |
+| Display clock | 5.000 MHz | Seven-segment display multiplexing |
 | Pixel clock | 25.179 MHz | Video timing, rendering, game logic, and TMDS encoding |
 | TMDS serialization clock | 125.893 MHz | 5× pixel-rate HDMI serialization |
 
@@ -163,7 +162,7 @@ Detailed simulation setup instructions and expected PASS messages are provided i
 
 ### Hardware validation
 
-The complete Pong system was synthesized, implemented, programmed, and tested on a **Spartan-7 FPGA board**.
+The complete Pong system was synthesized, implemented, programmed, and tested on the **Boolean Board with a Xilinx Spartan-7 XC7S50-CSGA324-1 FPGA**.
 
 The design operated correctly in real time, including:
 
